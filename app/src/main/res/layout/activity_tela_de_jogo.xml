@@ -21,4 +21,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
+
+    <ImageView
+        android:id="@+id/asteriode"
+        android:layout_width="66dp"
+        android:layout_height="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/asteroide"
+        tools:layout_editor_absoluteY="321dp" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="90dp"
+        android:layout_height="73dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/drone_topdown"
+        tools:layout_editor_absoluteY="624dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,39 @@
 package com.tiwgo.jogomobilecomsensores
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class tela_de_jogo : AppCompatActivity() {
+    lateinit var gameLoop: GameLoop
+    lateinit var gameTimer: GameTimer
+    lateinit var cronometro: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_tela_de_jogo)
 
+        cronometro = findViewById<TextView>(R.id.cronometro)
+
+        gameTimer = GameTimer()
+        gameLoop = GameLoop{
+            update()
+        }
+        gameLoop.start()
+        gameTimer.start()
+    }
+
+    fun update(){
+        gameTimer.getElapsedTimeMillis()
+        cronometro.setText(gameTimer.getFormattedTime())
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 }
