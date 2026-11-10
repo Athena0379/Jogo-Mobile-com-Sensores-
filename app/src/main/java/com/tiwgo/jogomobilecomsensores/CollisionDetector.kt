@@ -2,33 +2,21 @@ package com.tiwgo.jogomobilecomsensores
 
 import kotlin.math.abs
 
-object CollisionDetector {
 
-    fun checkCollision(
-        playerX: Float, playerY: Float, playerW: Float, playerH: Float,
-        obstacleX: Float, obstacleY: Float, obstacleW: Float, obstacleH: Float
-    ): Boolean {
-        return playerX < obstacleX + obstacleW &&
-                playerX + playerW > obstacleX &&
-                playerY < obstacleY + obstacleH &&
-                playerY + playerH > obstacleY
+object CollisionDetector {
+    fun checkCollision(player: GameRect, obstacle: GameRect): Boolean {
+        return player.left < obstacle.right &&
+                player.right > obstacle.left &&
+                player.top < obstacle.bottom &&
+                player.bottom > obstacle.top
     }
 
-    fun checkCollisionByDistance(
-        pX: Float, pY: Float, pW: Float, pH: Float,
-        oX: Float, oY: Float, oW: Float, oH: Float
-    ): Boolean {
-        val pCenterX = pX + pW / 2f
-        val pCenterY = pY + pH / 2f
+    fun checkCollisionByDistance(player: GameRect, obstacle: GameRect): Boolean {
+        val distanceX = abs(player.x - obstacle.x)
+        val distanceY = abs(player.y - obstacle.y)
 
-        val oCenterX = oX + oW / 2f
-        val oCenterY = oY + oH / 2f
-
-        val distanceX = abs(pCenterX - oCenterX)
-        val distanceY = abs(pCenterY - oCenterY)
-
-        val allowedX = (pW / 2f) + (oW / 2f)
-        val allowedY = (pH / 2f) + (oH / 2f)
+        val allowedX = (player.width / 2f) + (obstacle.width / 2f)
+        val allowedY = (player.height / 2f) + (obstacle.height / 2f)
 
         return distanceX < allowedX && distanceY < allowedY
     }

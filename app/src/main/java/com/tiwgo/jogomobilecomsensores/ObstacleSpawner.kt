@@ -1,37 +1,55 @@
 package com.tiwgo.jogomobilecomsensores
 
+import android.content.Context
+import android.util.Log
 import kotlin.random.Random
-data class Obstacle(
-    var x: Float,
-    var y: Float,
-    val width: Float,
-    val height: Float,
-    val spriteResId: Int
-)
 
+enum class AsteroidType(val resId: Int) {
+    ASTEROIDE_0(R.drawable.asteroide),
+}
 class ObstacleSpawner(
+    private val context: Context,
     private val bounds: GameBounds,
-    private var numberOfObstacles: Int = 5,
-    private var obstacleSpriteResId: Int = 0
+    private var numberOfObstacles: Int
 ) {
     val obstacles = mutableListOf<Obstacle>()
 
     fun generateRandomObstacles() {
         obstacles.clear()
 
-        val minWidth = 90f
-        val maxWidth = 140f
-        val safeZoneTop = bounds.minY + 300f
-        val safeZoneBottom = bounds.maxY - 400f
+        val minSize = 90f
+        val maxSize = 140f
+        val safeZoneTop = 300f
+        val safeZoneBottomOffset = 400f
+
+        val minX = bounds.minBounds.x
+        val maxX = bounds.maxBounds.x
+
+        val minY = safeZoneTop
+        val maxY = bounds.maxBounds.y - safeZoneBottomOffset
+
+        val allAsteroids = AsteroidType.values()
 
         for (i in 0 until numberOfObstacles) {
-            val width = Random.nextFloat() * (maxWidth - minWidth) + minWidth
-            val height = width
+            val spriteResId = allAsteroids[i % allAsteroids.size].resId
 
-            val x = Random.nextFloat() * (bounds.maxX - bounds.minX - width) + bounds.minX
-            val y = Random.nextFloat() * (safeZoneBottom - safeZoneTop) + safeZoneTop
+            val side = Random.nextFloat() * (maxSize - minSize) + minSize
+            val size = Vector2(x = side, y = side)
 
-            obstacles.add(Obstacle(x, y, width, height, obstacleSpriteResId))
+            val adjustedMaxX = maxX - size.x
+            val adjustedMaxY = maxY - size.y
+
+            val randomX = Random.nextFloat() * (adjustedMaxX - minX) + minX
+            val randomY = Random.nextFloat() * (adjustedMaxY - minY) + minY
+
+            val position = Vector2(x = randomX, y = randomY)
+
+            val tempRect = GameRect(position = position, size = size)
+            bounds.keepInside(tempRect)
+
+            val obstacle = Obstacle(context, tempRect.position, size, spriteResId)
+
+            obstacles.add(obstacle)
         }
     }
 }
