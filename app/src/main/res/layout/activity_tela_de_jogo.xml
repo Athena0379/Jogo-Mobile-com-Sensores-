@@ -26,11 +26,10 @@
         android:id="@+id/asteriode"
         android:layout_width="66dp"
         android:layout_height="64dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.292"
-        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/asteroide"
-        tools:layout_editor_absoluteY="321dp" />
+        tools:layout_editor_absoluteX="364dp"
+        tools:layout_editor_absoluteY="633dp"
+        tools:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageView10"
