@@ -5,16 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/telafinal"
     tools:context=".tela_final">
 
     <FrameLayout
         android:layout_width="408dp"
         android:layout_height="554dp"
-        tools:layout_editor_absoluteY="177dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="358dp"
+            android:layout_width="341dp"
+            android:layout_height="330dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
@@ -28,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Pontuação Final: "
-                    android:textColor="#9C27B0"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
@@ -38,7 +44,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="#9C27B0"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -48,9 +54,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="115dp"
                 android:gravity="center"
-                android:text="Lembre-se: Quanto menor o tempo, maior a pontuação."
-                android:textColor="#9C27B0"
+                android:text="Lembre-se: Quanto menor o tempo, maior a pontuação"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_iniciar"
+                android:layout_width="199dp"
+                android:layout_height="wrap_content"
+                android:text="Voltar para o Iniciar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/btn_restart"

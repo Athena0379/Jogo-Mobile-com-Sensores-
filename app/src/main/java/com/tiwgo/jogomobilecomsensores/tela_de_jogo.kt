@@ -1,6 +1,7 @@
 package com.tiwgo.jogomobilecomsensores
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -21,7 +22,7 @@ class tela_de_jogo : AppCompatActivity(), SensorEventListener {
     lateinit var gameTimer: GameTimer
     lateinit var cronometro: TextView
     lateinit var screenSize: Vector2
-    lateinit var gameContainer: RelativeLayout
+    lateinit var goalZone: GameRect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,11 @@ class tela_de_jogo : AppCompatActivity(), SensorEventListener {
             y = displayMetrics.heightPixels.toFloat()
         )
         gameBounds = GameBounds(screenSize, margin = 50f)
+
+        goalZone = GameRect(
+            position = Vector2(0f, 0f),
+            size = Vector2(screenSize.x * 2, 200f)
+        )
 
         obstacleSpawner = ObstacleSpawner(this, gameBounds, 10)
         obstacleSpawner.generateRandomObstacles()
@@ -105,6 +111,19 @@ class tela_de_jogo : AppCompatActivity(), SensorEventListener {
                 player.imageView.y = player.rect.top
                 break
             }
+        }
+        val reachedGoal = CollisionDetector.checkCollision(
+            player = player.rect,
+            obstacle = goalZone
+        )
+
+        if (reachedGoal) {
+            var pontos = gameTimer.calculateScore()
+            var intent = Intent(this, tela_final::class.java)
+            intent.putExtra("Total", pontos)
+            startActivity(intent)
+
+            gameLoop.stop()
         }
     }
 }
